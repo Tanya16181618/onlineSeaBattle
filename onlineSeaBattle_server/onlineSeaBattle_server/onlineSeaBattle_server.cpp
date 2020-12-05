@@ -28,6 +28,7 @@ Text text_que("", font, 30);
 Text endg("", font, 100);
 
 bool res = true;
+
 int main()
 {
 	while (window.isOpen()) {
