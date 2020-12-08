@@ -2,6 +2,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 #include <iostream>
+#include "Control.h"
 using namespace std;
 using namespace sf;
 
@@ -31,6 +32,72 @@ bool res = true;
 
 int main()
 {
+	
+	char pos = 'a';
+	text_que.setPosition(640, 425);
+	text_info.setPosition(744, 44);
+	string info;
+	string inf_1;
+	string inf_2;
+	string inf_3;
+	string inf_4;
+	string inf_5;
+	string que;
+	texture1.loadFromFile("back.png");
+	texture2.loadFromFile("ship.png");
+	texture3.loadFromFile("null.png");
+	texture4.loadFromFile("ship_kill.png");
+	texture5.loadFromFile("miss.png");
+	int k = 34;
+	int l = 34;
+	for (int i = 0; i < 10; i++) {
+		for (int j = 0; j < 10; j++) {
+			sprite_ship[i][j].setPosition(k, l);
+			k += 30;
+		}
+		l += 30;
+		k = 34;
+	}
+	k = 402;
+	l = 34;
+	for (int i = 0; i < 10; i++) {
+		for (int j = 0; j < 10; j++) {
+			sprite_enemy[i][j].setPosition(k, l);
+			k += 30;
+		}
+		l += 30;
+		k = 402;
+	}
+
+
+	sprite_field.setTexture(texture1);
+	sprite_field.setPosition(0, 0);
+
+
+
+	font.loadFromFile("AnimeAce2.ttf");
+	text.setFillColor(Color::Black);
+	text.setOutlineColor(Color::Black);
+	text_1.setFillColor(Color::Black);
+	text_1.setOutlineColor(Color::Black);
+	text_2.setFillColor(Color::Black);
+	text_2.setOutlineColor(Color::Black);
+	text_3.setFillColor(Color::Black);
+	text_3.setOutlineColor(Color::Black);
+	text_4.setFillColor(Color::Black);
+	text_4.setOutlineColor(Color::Black);
+	text_5.setFillColor(Color::Black);
+	text_5.setOutlineColor(Color::Black);
+	text_info.setFillColor(Color::Black);
+	text_info.setOutlineColor(Color::Black);
+	text_que.setFillColor(Color::Black);
+	text_que.setOutlineColor(Color::Black);
+	endg.setFillColor(Color::Red);
+	endg.setOutlineColor(Color::Red);
+
+	string put_in = "";
+	Control NMC;
+
 	while (window.isOpen()) {
 		Event event;
 		while (window.pollEvent(event)) {
@@ -43,29 +110,28 @@ int main()
 			}
 			if (event.type == Event::KeyPressed)
 				if (event.key.code == Keyboard::Backspace)
-					/*if (!put_in.empty())
-						put_in.resize(put_in.size() - 1);*/
-					if (event.key.code == Keyboard::Enter) {
-						/*if (put_in == "reset") {
-							NMC.reset();
-						}*/
-						/*if (put_in == "exit")
-							window.close();
-						if (put_in[0] > 40 && put_in[1] < 107) {
+					if (!put_in.empty())
+						put_in.resize(put_in.size() - 1);
+			if (event.key.code == Keyboard::Enter) {
+				if (put_in == "reset") {
+					NMC.reset();
+				}
+				if (put_in == "exit")
+					window.close();
+				if (put_in[0] > 40 && put_in[1] < 107) {
 
-							if (NMC.get_pos() == 'd') {
-								res = NMC.attack_enemy(put_in[1], put_in[0]);
-							}
-							if (NMC.get_pos() == 'c') {
-								res = NMC.set_ship(put_in[1], put_in[0]);
-							}
-							if (NMC.get_pos() == 'b') {
-								res = NMC.choise_ships(put_in[0]);
-							}
-						}
-						put_in = "";*/
+					if (NMC.get_pos() == 'd') {
+						res = NMC.attack_enemy(put_in[1], put_in[0]);
 					}
-
+					if (NMC.get_pos() == 'c') {
+						res = NMC.set_ship(put_in[1], put_in[0]);
+					}
+					if (NMC.get_pos() == 'b') {
+						res = NMC.choise_ships(put_in[0]);
+					}
+				}
+				put_in = "";
+			}
 		}
 
 		int zk;
@@ -116,7 +182,7 @@ int main()
 
 
 		window.clear();
-		/*pos = NMC.get_pos();*/
+		pos = NMC.get_pos();
 
 		switch (pos)
 		{
