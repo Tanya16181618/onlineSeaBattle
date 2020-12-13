@@ -8,7 +8,7 @@ using namespace sf;
 
 
 // константы для текста
-RenderWindow window(VideoMode(1280, 720), "морской бой");
+RenderWindow window(VideoMode(1280, 720), "Sea Battle");
 Texture texture1;
 Texture texture2;
 Texture texture3;
@@ -17,25 +17,24 @@ Texture texture5;
 Sprite sprite_ship[10][10];
 Sprite sprite_enemy[10][10];
 Sprite sprite_field;
-Font font;
-Text text("", font, 30);
-Text text_1("", font, 30);
-Text text_2("", font, 30);
-Text text_3("", font, 30);
-Text text_4("", font, 30);
-Text text_5("", font, 30);
-Text text_info("", font, 30);
-Text text_que("", font, 30);
-Text endg("", font, 100);
 
+Font font;
+Text text("", font, 25);
+Text text_1("", font, 25);
+Text text_2("", font, 25);
+Text text_3("", font, 25);
+Text text_4("", font, 25);
+Text text_5("", font, 25);
+Text text_info("", font, 25);
+Text text_que("", font, 25);
+Text endg("", font, 50);
 bool res = true;
 
 int main()
 {
-	
-	char pos = 'a';
+	char status = 'a';
 	text_que.setPosition(640, 425);
-	text_info.setPosition(744, 44);
+	text_info.setPosition(45, 410);
 	string info;
 	string inf_1;
 	string inf_2;
@@ -68,8 +67,6 @@ int main()
 		l += 30;
 		k = 402;
 	}
-
-
 	sprite_field.setTexture(texture1);
 	sprite_field.setPosition(0, 0);
 
@@ -104,16 +101,17 @@ int main()
 			if (event.type == sf::Event::Closed)
 				window.close();
 			if (event.type == Event::TextEntered && event.text.unicode != 8) {
-				/*if (put_in.size() < 6) {
+				if (put_in.size() < 6) {
 					put_in += event.text.unicode;
-				}*/
+				}
 			}
 			if (event.type == Event::KeyPressed)
 				if (event.key.code == Keyboard::Backspace)
 					if (!put_in.empty())
 						put_in.resize(put_in.size() - 1);
 			if (event.key.code == Keyboard::Enter) {
-				if (put_in == "reset") {
+				if (put_in == "repeat")
+				{
 					NMC.reset();
 				}
 				if (put_in == "exit")
@@ -139,7 +137,7 @@ int main()
 
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
-				/*zn = NMC.game.get_table(i, j);*/
+				zn = NMC.game.get_table(i, j);
 				switch (zn)
 				{
 				case 'o':
@@ -165,7 +163,7 @@ int main()
 
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
-				/*zn = NMC.game.get_enemy(i, j);*/
+				zn = NMC.game.get_enemy(i, j);
 				switch (zn)
 				{
 				case 'o':
@@ -182,16 +180,16 @@ int main()
 
 
 		window.clear();
-		pos = NMC.get_pos();
+		status = NMC.get_pos();
 
-		switch (pos)
+		switch (status)
 		{
 		case 'a':
-			info = "Ожидание игрока...";
+			info = "Подключение второго игрока";
 			text_info.setString(info);
 
 			inf_1 = "";
-			text_1.setPosition(744, 91);
+			text_1.setPosition(744, 460);
 			text_1.setString(inf_1);
 
 			inf_2 = "";
@@ -210,72 +208,59 @@ int main()
 			text_5.setPosition(744, 279);
 			text_5.setString(inf_5);
 
-			que = "ожидайте";
+			que = "Ожидайте";
 			text_que.setPosition(620, 425);
 			text_que.setString(que);
 
 			text.setString(put_in);
 			text.setPosition(923, 279);
 			break;
+
+
 		case 'b':
-			info = "Кол-во кораблей:";
-			text_info.setString(info);
+			text_info.setString(L"Осталось расставить");
 
 			zk = NMC.get_val(0);
-			zn = zk + 48;
-			inf_1 = "1 палуба: ";
-			inf_1 = +zn;
-			text_1.setPosition(744, 91);
-			text_1.setString(inf_1);
+			text_1.setPosition(50, 485);
+			text_1.setString(L"1-палубных: " + to_string(zk));
 
 			zk = NMC.get_val(1);
-			zn = zk + 48;
-			inf_2 = "2 палубы: ";
-			inf_2 = +zn;
-			text_2.setPosition(744, 138);
-			text_2.setString(inf_2);
+			text_2.setPosition(50, 550);
+			text_2.setString(L"2-палубных: " + to_string(zk));
 
 			zk = NMC.get_val(2);
-			zn = zk + 48;
-			inf_3 = "3 палубы: ";
-			inf_3 = +zn;
-			text_3.setPosition(744, 185);
-			text_3.setString(inf_3);
+			text_3.setPosition(50, 620);
+			text_3.setString(L"3-палубных: " + to_string(zk));
 
 			zk = NMC.get_val(3);
-			zn = zk + 48;
-			inf_4 = "4 палубы: ";
-			inf_4 = +zn;
-			text_4.setPosition(744, 232);
-			text_4.setString(inf_4);
+			text_4.setPosition(50, 680);
+			text_4.setString(L"4-палубных: " + to_string(zk));
 
-			inf_5 = "Ввод:";
-			text_5.setPosition(744, 279);
-			text_5.setString(inf_5);
+			text_5.setPosition(30, 380);
+			text_5.setString(L" ");
 
 			if (res == false) {
-				que = "не, давай заного";
+				text_que.setString(L"Неверно, попробуй снова:");
 			}
-			que = "выберите корабль\n(введите кол-во палуб\n и нажмите enter)";
-			text_que.setPosition(620, 425);
-			text_que.setString(que);
+			else {
+				text_que.setString(L"Введите число палуб + enter:");
+			}
+			text_que.setPosition(30, 340);
 
-			text.setString(put_in);
-			text.setPosition(923, 279);
+			text.setString(put_in); // текст введеный пользователем
+			text.setPosition(570, 340);
 			break;
-		case 'c':
-			info = "Куда поставить?!";
-			text_info.setString(info);
+
+
+		case 'c': // ФАЗА ВВОДА КООРДИНАТ КОРАБЛЯ
+			text_info.setString(L"Введите координаты корабля\nНапример, a1, g3");
 
 			inf_1 = "";
 			text_1.setString(inf_1);
 
 			zk = NMC.get_sh();
-			zn = zk + 48;
-			inf_2 = "Осталось клеток: ";
-			inf_2 += zn;
-			text_2.setPosition(744, 138);
-			text_2.setString(inf_2);
+			text_2.setPosition(50, 550);
+			text_2.setString(L"Осталось клеток " + to_string(zk));
 
 			inf_3 = "";
 			text_3.setString(inf_3);
@@ -284,22 +269,21 @@ int main()
 			text_4.setString(inf_4);
 
 			if (res == false) {
-				que = "не, давай заного";
+				text_que.setString(L"Неверно,попробуй снова");
 			}
-			que = "выберите позицию";
-			text_que.setPosition(620, 435);
-			text_que.setString(que);
+			else {
+				text_que.setString(" ");
+			}
+			text_que.setPosition(50, 375);
 
-			inf_5 = "Ввод:";
-			text_5.setPosition(744, 279);
-			text_5.setString(inf_5);
+			text_5.setPosition(45, 490);
+			text_5.setString(L"Ваш ход:");
 
 			text.setString(put_in);
-			text.setPosition(923, 279);
+			text.setPosition(220, 490);
 			break;
 		case 'd':
-			info = "Куда стрелять?!\n*голосом стрелка\n из warcraft3";
-			text_info.setString(info);
+			text_info.setString(L"Укажите координаты выстрела");
 
 			inf_1 = "";
 			text_1.setString(inf_1);
@@ -314,18 +298,18 @@ int main()
 			text_4.setString(inf_4);
 
 			if (res == false) {
-				que = "не, давай заного";
+				text_que.setString(L"Неверно,попробуй снова:");
 			}
-			que = "выберите позицию\nи ожидайте";
-			text_que.setPosition(620, 435);
-			text_que.setString(que);
+			else {
+				text_que.setString(" ");
+			}
+			text_que.setPosition(50, 375);
 
-			inf_5 = "Ввод:";
-			text_5.setPosition(744, 279);
-			text_5.setString(inf_5);
-
+			text_5.setPosition(45, 490);
+			text_5.setString(L"Ваш удар:");
+		
 			text.setString(put_in);
-			text.setPosition(923, 279);
+			text.setPosition(230, 490);
 			break;
 		default:
 			break;
@@ -344,18 +328,17 @@ int main()
 
 		if (NMC.game.get_win() == 'w') {
 			if (NMC.game.get_yach() != 0) {
-				info = "Победа!!!";
-				endg.setPosition(340, 360);
-				endg.setString(info);
+				endg.setPosition(50, 150);
+				endg.setString("Вы победили");
 
 			}
 			else {
-				info = "Смэрть";
-				endg.setPosition(340, 360);
-				endg.setString(info);
+				endg.setPosition(50, 150);
+				endg.setString(L"Вы проиграли");
 			}
 		}
 
+		
 		window.draw(text);
 		window.draw(text_info);
 		window.draw(text_1);

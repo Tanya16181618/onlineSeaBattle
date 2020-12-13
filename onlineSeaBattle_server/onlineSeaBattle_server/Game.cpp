@@ -1,11 +1,9 @@
 #include "Game.h"
-
 Game::Game()
 {
-
 	ij[0] = 0;
 	ij[1] = 0;
-	yach = 1; // количество кораблей
+	yach = 10; // количество кораблей
 	win = 'f';
 	for (int i = 0; i < 10; i++)
 		for (int j = 0; j < 10; j++) {
@@ -20,7 +18,7 @@ Game::Game()
 
 	int sizeofaddr = sizeof(addr);
 	addr.sin_addr.s_addr = inet_addr("127.0.0.1");
-	addr.sin_port = htons(10);
+	addr.sin_port = htons(80);
 	addr.sin_family = AF_INET;
 
 	SOCKET sListen = socket(AF_INET, SOCK_STREAM, NULL);

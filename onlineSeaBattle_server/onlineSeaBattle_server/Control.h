@@ -13,10 +13,10 @@ public:
 	Game game;
 	Control() {
 		pos = 'b';
-		ships[0] = 1;
-		ships[1] = 0;
-		ships[2] = 0;
-		ships[3] = 0;
+		ships[0] = 4;
+		ships[1] = 3;
+		ships[2] = 2;
+		ships[3] = 1;
 		sh = 0;
 		p = 0;
 		flag = true;
